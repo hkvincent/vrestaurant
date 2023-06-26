@@ -1,10 +1,11 @@
+import Link from 'next/link';
 import React from 'react';
 
 const RestaurantNavBar = () => {
     return (
         <nav className="flex text-reg border-b pb-2">
-            <a href="" className="mr-7"> Overview </a>
-            <a href="" className="mr-7"> Menu </a>
+            <Link href="/restaurant/milestone-grill" className="mr-7">Overview </Link>
+            <Link href="/restaurant/milestone-grill/menu"  className="mr-7">Menu </Link>
         </nav>
     );
 };

@@ -1,5 +1,6 @@
 import NavBar from './components/NavBar'
 import './globals.css'
+import type { Metadata } from 'next'
 
 export default function RootLayout({
   children,
@@ -24,4 +25,10 @@ export default function RootLayout({
       </body>
     </html>
   )
+}
+
+export const metadata: Metadata = {
+  title: 'V Restuarant',
+  description: 'created by vincent',
+  icons: '/favicon.ico',
 }

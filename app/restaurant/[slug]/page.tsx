@@ -11,31 +11,24 @@ import ReservationCard from './components/ReservationCard';
 const restaurantDetailspage = () => {
     return (
         <>
-            {/* HEADER */}
-            <Hearder />
-            {/* HEADER */} {/* DESCRIPTION PORTION */}
-            <div className="flex m-auto w-2/3 justify-between items-start 0 -mt-11">
-                <div className="bg-white w-[70%] rounded p-3 shadow">
-                    {/* RESAURANT NAVBAR */}
-                    <RestaurantNavBar />
-                    {/* RESAURANT NAVBAR */} {/* TITLE */}
-                    <Title />
-                    {/* TITLE */} {/* RATING */}
-                    <Rating />
-                    {/* RATING */} {/* DESCRIPTION */}
-                    <Description />
-                    {/* DESCRIPTION */} {/* IMAGES */}
-                    <Images />
-                    {/* IMAGES */} {/* REVIEWS */}
-                    <Reviews />
-                    {/* REVIEWS */}
-                </div>
-                <div className="w-[27%] relative text-reg">
-                    <ReservationCard />
-                </div>
+            <div className="bg-white w-[70%] rounded p-3 shadow">
+                {/* RESAURANT NAVBAR */}
+                <RestaurantNavBar />
+                {/* RESAURANT NAVBAR */} {/* TITLE */}
+                <Title />
+                {/* TITLE */} {/* RATING */}
+                <Rating />
+                {/* RATING */} {/* DESCRIPTION */}
+                <Description />
+                {/* DESCRIPTION */} {/* IMAGES */}
+                <Images />
+                {/* IMAGES */} {/* REVIEWS */}
+                <Reviews />
+                {/* REVIEWS */}
             </div>
-            {/* DESCRIPTION PORTION */} {/* RESERVATION CARD PORTION */} {/* RESERVATION
-          CARD PORTION */}
+            <div className="w-[27%] relative text-reg">
+                <ReservationCard />
+            </div>
         </>
     );
 };
