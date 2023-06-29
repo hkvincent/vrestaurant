@@ -7,21 +7,54 @@ import Description from './components/Description';
 import Images from './components/Images';
 import Reviews from './components/Reviews';
 import ReservationCard from './components/ReservationCard';
+import { PrismaClient } from '@prisma/client';
 
-const restaurantDetailspage = () => {
+
+interface RestaurantDetailsPageProps {
+    slug: string;
+    id: number;
+    name: string;
+    images: string[];
+    description: string;
+}
+
+
+const prisma = new PrismaClient();
+
+const fecthRestaurantBySlug = async (slug: string): Promise<RestaurantDetailsPageProps> => {
+    const r = await prisma.restaurant.findUnique({
+        where: {
+            slug
+        },
+        select: {
+            id: true,
+            name: true,
+            images: true,
+            description: true,
+            slug: true,
+        }
+    })
+
+    if (!r) throw new Error('Restaurant not found');
+
+    return r;
+}
+
+const restaurantDetailspage = async ({ params: { slug } }: { params: { slug: string } }) => {
+    const restaurant = await fecthRestaurantBySlug(slug);
     return (
         <>
             <div className="bg-white w-[70%] rounded p-3 shadow">
                 {/* RESAURANT NAVBAR */}
-                <RestaurantNavBar />
+                <RestaurantNavBar slug={slug} />
                 {/* RESAURANT NAVBAR */} {/* TITLE */}
-                <Title />
+                <Title name={restaurant.name} />
                 {/* TITLE */} {/* RATING */}
                 <Rating />
                 {/* RATING */} {/* DESCRIPTION */}
-                <Description />
+                <Description description={restaurant.description} />
                 {/* DESCRIPTION */} {/* IMAGES */}
-                <Images />
+                <Images images={restaurant.images}/>
                 {/* IMAGES */} {/* REVIEWS */}
                 <Reviews />
                 {/* REVIEWS */}

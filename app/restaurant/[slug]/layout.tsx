@@ -1,12 +1,13 @@
 import React from 'react';
 import Hearder from './components/Hearder';
 
-const layout = ({ children }: {
-    children: React.ReactNode
+const layout = ({ children, params }: {
+    children: React.ReactNode,
+    params: { slug: string };
 }) => {
     return (
         <>
-            <Hearder />
+            <Hearder name = {params.slug}/>
             {/* HEADER */} {/* DESCRIPTION PORTION */}
             <div className="flex m-auto w-2/3 justify-between items-start 0 -mt-11">
                 {children}
