@@ -40,14 +40,17 @@ const RestaurantCard = ({ restaurant }: { restaurant: RestaurantCardProps }) => 
 
 
     return (
+
         <div className="border-b flex pb-5 ml-4">
-            <img
-                src={restaurant.main_image}
-                alt=""
-                className="w-56 rounded h-36"
-            />
+            <Link href={`/restaurant/${restaurant.slug}`}>
+                <img
+                    src={restaurant.main_image}
+                    alt=""
+                    className="w-56 rounded h-36"
+                />
+            </Link>
             <div className="pl-5">
-                <h2 className="text-3xl">{restaurant.name}</h2>
+                <Link href={`/restaurant/${restaurant.slug}`}> <h2 className="text-3xl">{restaurant.name}</h2> </Link>
                 <div className="flex items-start">
                     <div className="flex mb-2">{
                         //redner rating according to the average rating, also display half of the star
@@ -83,14 +86,10 @@ const RestaurantCard = ({ restaurant }: { restaurant: RestaurantCardProps }) => 
                 </div>
                 <div className="text-red-600">
                     <Link href={`/restaurant/${restaurant.slug}`}> View more information </Link>
-                    {/* <Link href="/restaurant/milestones-stones">
-                            View more informationF
-                        </Link> */}
-                    {/* <a href="">View more information</a> */}
                 </div>
             </div>
-
         </div>
+
     );
 };
 
