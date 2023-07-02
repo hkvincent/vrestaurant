@@ -4,7 +4,7 @@ const StarRender = ({ rating }: { rating: number }) => {
     let fullStars = Math.floor(rating);
     let halfStar = rating % 1 !== 0;
     let grayStars = 5 - fullStars - (halfStar ? 1 : 0);
-    console.log({ fullStars, halfStar });
+    // console.log({ fullStars, halfStar });
     return (
         <>
             {Array(fullStars)

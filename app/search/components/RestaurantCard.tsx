@@ -21,7 +21,7 @@ const RestaurantCard = ({ restaurant }: { restaurant: RestaurantCardProps }) => 
 
     const renderRatingText = () => {
         if (restaurant.reviews.length === 0) return 'No reviews yet';
-        console.log(calReviewRatingAverage(restaurant.reviews) + ' ' + restaurant.name)
+        // console.log(calReviewRatingAverage(restaurant.reviews) + ' ' + restaurant.name)
         const rating = calReviewRatingAverage(restaurant.reviews);
         if (rating < 2) {
             return 'Awful';
