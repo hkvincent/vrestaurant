@@ -42,11 +42,11 @@ const RestaurantCard = ({ restaurant }: { restaurant: RestaurantCardProps }) => 
     return (
 
         <div className="border-b flex pb-5 ml-4">
-            <Link href={`/restaurant/${restaurant.slug}`}>
+            <Link href={`/restaurant/${restaurant.slug}`} className='flex items-end justify-center'>
                 <img
                     src={restaurant.main_image}
                     alt=""
-                    className="w-56 rounded h-36"
+                    className="w-56 rounded h-36 "
                 />
             </Link>
             <div className="pl-5">
