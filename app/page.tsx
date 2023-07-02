@@ -19,6 +19,7 @@ const fecthRestaurant = async (): Promise<RestaurantCardType[]> => {
         slug: true,
         location: true,
         price: true,
+        reviews: true,
       }
     }
   )
@@ -38,7 +39,7 @@ export default async function Home() {
         {/* CARD */}
 
         {restaurants.map((restaurant) => (
-          <RestaurantCard 
+          <RestaurantCard
             restaurant={restaurant}
           />
         ))}

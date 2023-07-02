@@ -1,14 +1,21 @@
+import { Review } from '@prisma/client';
 import React from 'react';
+import StarRender from '../../../search/components/StarRender';
+import { calReviewRatingAverage } from '../../../../utils/calReviewRatingAverage';
 
-const Rating = () => {
+const Rating = ({ reviews }: { reviews: Review[] }) => {
     return (
-        <div className="flex items-end">
-            <div className="ratings mt-2 flex items-center">
-                <p>*****</p>
-                <p className="text-reg ml-3">4.9</p>
+        <div className="flex items-center">
+            <div className="ratings mt-2 flex ">
+                <StarRender rating={calReviewRatingAverage(reviews)} />
+                <p className='text-reg ml-2'>{calReviewRatingAverage(reviews).toFixed(1)}</p>
             </div>
-            <div>
-                <p className="text-reg ml-4">600 Reviews</p>
+
+            <div className="text-reg pt-2 ml-4">
+                {reviews.length > 0 ?
+                    (<>{reviews.length} Review{reviews.length > 1 && 's'}</>)
+                    :
+                    "No reviews yet"}
             </div>
         </div>
     );

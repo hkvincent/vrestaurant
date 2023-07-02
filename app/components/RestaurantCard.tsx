@@ -2,6 +2,8 @@ import Link from 'next/link';
 import React from 'react';
 import { RestaurantCardType } from '../type';
 import Price from './Price';
+import StarRender from '../search/components/StarRender';
+import { calReviewRatingAverage } from '../../utils/calReviewRatingAverage';
 
 
 interface RestaurantCardProps {
@@ -10,6 +12,28 @@ interface RestaurantCardProps {
 
 
 const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
+
+
+    const renderRatingText = () => {
+        if (restaurant.reviews.length === 0) return 'No reviews yet';
+        const rating = calReviewRatingAverage(restaurant.reviews);
+        if (rating < 2) {
+            return 'Awful';
+        }
+        if (rating < 3) {
+            return 'Mediocre';
+        }
+        if (rating < 4) {
+            return 'Good';
+        }
+        if (rating < 4.5) {
+            return 'Very Good';
+        }
+        return 'Awesome';
+    };
+
+
+
     return (
         <div
             className="w-64 h-72 m-3 rounded overflow-hidden border cursor-pointer"
@@ -25,8 +49,10 @@ const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
                         {restaurant.name}
                     </h3>
                     <div className="flex items-start">
-                        <div className="flex mb-2">*****</div>
-                        <p className="ml-2">77 reviews</p>
+                        <div className="flex mb-2">
+                            <StarRender rating={calReviewRatingAverage(restaurant.reviews)} />
+                        </div>
+                        <p className="ml-2">{restaurant.reviews.length} review{restaurant.reviews.length > 1 && 's'}</p>
                     </div>
                     <div className="flex text-reg font-light capitalize">
                         <p className=" mr-3">

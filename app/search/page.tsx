@@ -7,7 +7,37 @@ import { PRICE, PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-const fecthRestaurant = (city: string | undefined) => {
+interface SearchParams {
+    city?: string,
+    cuisine?: string,
+    price?: PRICE
+}
+
+const fecthRestaurant = (searchParams: SearchParams) => {
+    const where: any = {}
+    if (searchParams.city) {
+        const location = {
+            name: {
+                equals: searchParams.city.toLocaleLowerCase()
+            }
+        }
+        where.location = location;
+    }
+    if (searchParams.cuisine) {
+        const cuisine = {
+            name: {
+                equals: searchParams.cuisine.toLocaleLowerCase()
+            }
+        }
+        where.cuisine = cuisine;
+    }
+    if (searchParams.price) {
+        const price = {
+            equals: searchParams.price
+        }
+        where.price = price;
+    }
+
     const select = {
         id: true,
         name: true,
@@ -16,21 +46,12 @@ const fecthRestaurant = (city: string | undefined) => {
         slug: true,
         location: true,
         price: true,
+        reviews: true,
     }
-    console.log(city)
-
-    if (city === "") return prisma.restaurant.findMany({ select });
-
+    console.log({ searchParams })
     return prisma.restaurant.findMany(
         {
-            where: {
-                location: {
-                    name: {
-                        equals: city?.toLocaleLowerCase()
-                    }
-
-                }
-            }
+            where
             ,
             select
         }
@@ -47,8 +68,8 @@ const fecthCuisines = () => {
 
 
 
-export default async function search({ searchParams }: { searchParams: { city?: string, cuisine?: string, price?: PRICE } }) {
-    const restaurants = await fecthRestaurant(searchParams.city);
+export default async function search({ searchParams }: { searchParams: SearchParams }) {
+    const restaurants = await fecthRestaurant(searchParams);
     const locations = await fecthLocations();
     const cuisines = await fecthCuisines();
 
