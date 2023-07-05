@@ -12,20 +12,34 @@ const style = {
     transform: "translate(-50%, -50%)",
     width: 400,
     bgcolor: "background.paper",
-
     boxShadow: 24,
     p: 4,
 };
 
 
 const AuthModal = ({ isSignin }: { isSignin: boolean }) => {
-    const renderContent = (signinContent: string, signupContent: string) => {
+    const renderContent: (signinContent: string, signupContent: string) => string = (signinContent: string, signupContent: string): string => {
         return isSignin ? signinContent : signupContent;
     };
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [inputs, setInputs] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        city: "",
+        password: "",
+    });
+
+    const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputs({
+            ...inputs,
+            [e.target.name]: e.target.value,
+        });
+    };
 
     return (
         <div>
@@ -45,17 +59,18 @@ const AuthModal = ({ isSignin }: { isSignin: boolean }) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    {loading ? (
+                    {/* {loading ? (
                         <div className="py-24 px-2 h-[600px] flex justify-center">
                             <CircularProgress />
                         </div>
-                    ) : (
+                    ) :  */}
+                   { (
                         <div className="p-2 h-[600px]">
-                            {error ? (
+                            {/* {error ? (
                                 <Alert severity="error" className="mb-4">
                                     {error}
                                 </Alert>
-                            ) : null}
+                            ) : null} */}
                             <div className="uppercase font-bold text-center pb-2 border-b mb-2">
                                 <p className="text-sm">
                                     {renderContent("Sign In", "Create Account")}
@@ -75,8 +90,8 @@ const AuthModal = ({ isSignin }: { isSignin: boolean }) => {
                                 />
                                 <button
                                     className="uppercase bg-red-600 w-full text-white p-3 rounded text-sm mb-5 disabled:bg-gray-400"
-                                    disabled={disabled}
-                                    onClick={handleClick}
+                                    // disabled={disabled}
+                                    // onClick={handleClick}
                                 >
                                     {renderContent("Sign In", "Create Account")}
                                 </button>

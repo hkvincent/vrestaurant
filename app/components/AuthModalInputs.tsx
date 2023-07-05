@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-interface Props {
+interface AuthModalProps {
     inputs: {
         firstName: string;
         lastName: string;
@@ -19,7 +19,7 @@ const AuthModalInputs = ({
     inputs,
     handleChangeInput,
     isSignin,
-}: Props) => {
+}: AuthModalProps) => {
     return (
         <div>
             {isSignin ? null : (
