@@ -90,8 +90,8 @@ const AuthModal = ({ isSignin }: { isSignin: boolean }) => {
                                 />
                                 <button
                                     className="uppercase bg-red-600 w-full text-white p-3 rounded text-sm mb-5 disabled:bg-gray-400"
-                                    // disabled={disabled}
-                                    // onClick={handleClick}
+                                    disabled={disabled}
+                                    onClick={handleClick}
                                 >
                                     {renderContent("Sign In", "Create Account")}
                                 </button>
