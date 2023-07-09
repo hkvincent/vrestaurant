@@ -105,7 +105,8 @@ export async function POST(
         .setExpirationTime("24h")
         .sign(secret);
 
-    //set-cookies("jwt", token, { req, res, maxAge: 60 * 6 * 24 });
+    const cookieStore = cookies()
+    cookieStore.set('jwt', token, { maxAge: 60 * 60 * 24 * 7 })
 
     return new Response(JSON.stringify({
         firstName: user.first_name,

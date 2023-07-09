@@ -7,9 +7,10 @@ import { cookies } from 'next/headers'
 
 const prisma = new PrismaClient();
 
-export  async function POST(req: Request,) {
+export async function POST(req: Request,) {
     try {
         const body = await req.json();
+        console.log("POST body: " + body);
 
         const { email, password } = body;
 
@@ -32,8 +33,9 @@ export  async function POST(req: Request,) {
             }
         });
 
+        console.log("errors: " + errors);
         if (errors.length > 0) {
-            return new Response(JSON.stringify(errors[0]),
+            return new Response(JSON.stringify({ errorMessage: errors[0] }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     status: 400,
@@ -47,8 +49,10 @@ export  async function POST(req: Request,) {
             },
         });
 
+        console.log("user: " + user);
+
         if (!user) {
-            return new Response(JSON.stringify("Username or Password is incorrect"),
+            return new Response(JSON.stringify({ errorMessage: "Email or password is invalid" }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     status: 401,
@@ -58,12 +62,15 @@ export  async function POST(req: Request,) {
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordMatch) {
-            return new Response(JSON.stringify("Username or Password is incorrect"),
+            console.log("passwordMatch: " + passwordMatch);
+            return new Response(JSON.stringify({ errorMessage: "Email or password is invalid" }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     status: 401,
                 });
         }
+
+
 
         const alg = "HS256";
 
@@ -74,6 +81,9 @@ export  async function POST(req: Request,) {
             .setExpirationTime("24h")
             .sign(secret);
 
+        const cookieStore = cookies()
+        cookieStore.set('jwt', token, { maxAge: 60 * 60 * 24 * 7 })
+
         return new Response(JSON.stringify({
             firstName: user.first_name,
             lastName: user.last_name,
@@ -83,9 +93,7 @@ export  async function POST(req: Request,) {
             token
         }), {
             headers: {
-                'Content-Type': 'application/json',
-                'Set-Cookie': `jwt=${token}`,
-                'max-age': `${60 * 6 * 24}`
+                'Content-Type': 'application/json'
             },
             status: 200,
         });

@@ -4,6 +4,8 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Alert, CircularProgress } from "@mui/material";
 import AuthModalInputs from "./AuthModalInputs";
+import useAuth from "../../hook/useAuth";
+import { AuthenticationContext } from "../context/AuthContext";
 
 const style = {
     position: "absolute" as "absolute",
@@ -18,13 +20,24 @@ const style = {
 
 
 const AuthModal = ({ isSignin }: { isSignin: boolean }) => {
-    const renderContent: (signinContent: string, signupContent: string) => string = (signinContent: string, signupContent: string): string => {
-        return isSignin ? signinContent : signupContent;
+    const [disabled, setDisabled] = useState(true);
+    const [open, setOpen] = useState(false);
+
+    const handleClose = () => setOpen(false);
+    const { signin, signup } = useAuth();
+    const { loading, data, error, setAuthState } = useContext(AuthenticationContext);
+    console.log("data", data)
+    console.log("loading", loading)
+    
+    const handleOpen = () => {
+        setAuthState({
+            data: null,
+            error: null,
+            loading: false,
+        });
+        setOpen(true)
     };
 
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
     const [inputs, setInputs] = useState({
         firstName: "",
         lastName: "",
@@ -34,11 +47,45 @@ const AuthModal = ({ isSignin }: { isSignin: boolean }) => {
         password: "",
     });
 
+    useEffect(() => {
+        if (isSignin) {
+            if (inputs.password && inputs.email) {
+                return setDisabled(false);
+            }
+        } else {
+            if (
+                inputs.firstName &&
+                inputs.lastName &&
+                inputs.email &&
+                inputs.password &&
+                inputs.city &&
+                inputs.phone
+            ) {
+                return setDisabled(false);
+            }
+        }
+
+        setDisabled(true);
+    }, [inputs]);
+
+
+    const handleClick = () => {
+        if (isSignin) {
+            signin({ email: inputs.email, password: inputs.password }, handleClose);
+        } else {
+            signup(inputs, handleClose);
+        }
+    };
+
     const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputs({
             ...inputs,
             [e.target.name]: e.target.value,
         });
+    };
+
+    const renderContent: (signinContent: string, signupContent: string) => string = (signinContent: string, signupContent: string): string => {
+        return isSignin ? signinContent : signupContent;
     };
 
     return (
@@ -59,18 +106,17 @@ const AuthModal = ({ isSignin }: { isSignin: boolean }) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    {/* {loading ? (
+                    {loading ? (
                         <div className="py-24 px-2 h-[600px] flex justify-center">
                             <CircularProgress />
                         </div>
-                    ) :  */}
-                   { (
+                    ) : (
                         <div className="p-2 h-[600px]">
-                            {/* {error ? (
+                            {error ? (
                                 <Alert severity="error" className="mb-4">
                                     {error}
                                 </Alert>
-                            ) : null} */}
+                            ) : null}
                             <div className="uppercase font-bold text-center pb-2 border-b mb-2">
                                 <p className="text-sm">
                                     {renderContent("Sign In", "Create Account")}
