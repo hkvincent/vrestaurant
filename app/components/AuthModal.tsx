@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Alert, CircularProgress } from "@mui/material";
 import AuthModalInputs from "./AuthModalInputs";
-import useAuth from "../../hook/useAuth";
+import useAuth from "../../hooks/useAuth";
 import { AuthenticationContext } from "../context/AuthContext";
 
 const style = {

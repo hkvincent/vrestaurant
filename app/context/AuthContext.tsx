@@ -2,7 +2,7 @@
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import React, { useState, createContext, useEffect } from "react";
-import useAuth from "../../hook/useAuth";
+import useAuth from "../../hooks/useAuth";
 
 
 interface User {

@@ -17,6 +17,8 @@ interface RestaurantDetailsPageProps {
     images: string[];
     description: string;
     reviews: Review[];
+    open_time: string;
+    close_time: string;
 }
 
 
@@ -34,6 +36,8 @@ const fecthRestaurantBySlug = async (slug: string): Promise<RestaurantDetailsPag
             description: true,
             slug: true,
             reviews: true,
+            open_time: true,
+            close_time: true,
         }
     })
 
@@ -62,7 +66,7 @@ const restaurantDetailspage = async ({ params: { slug } }: { params: { slug: str
                 {/* REVIEWS */}
             </div>
             <div className="w-[27%] relative text-reg">
-                <ReservationCard />
+                <ReservationCard slug={slug} openTime={restaurant.open_time} closeTime={restaurant.close_time} />
             </div>
         </>
     );

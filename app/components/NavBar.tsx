@@ -4,7 +4,7 @@ import Link from "next/link";
 import AuthModal from "./AuthModal";
 import { useContext } from "react";
 import { AuthenticationContext } from "../context/AuthContext";
-import useAuth from "../../hook/useAuth";
+import useAuth from "../../hooks/useAuth";
 
 
 const NavBar = () => {
