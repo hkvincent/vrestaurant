@@ -38,7 +38,7 @@ const ReservationCard = ({ openTime, closeTime, slug, }: { openTime: string; clo
         let isWithinWindow = false;
 
         times.forEach((t) => {
-            // Convert time strings to Date objects
+            // Convert time strings to Date objects with same day, bacause we only care about time
             const tDate = new Date(`1970-01-01T${t.time}`);
             const openTimeDate = new Date(`1970-01-01T${openTime}`);
             const closeTimeDate = new Date(`1970-01-01T${closeTime}`);
