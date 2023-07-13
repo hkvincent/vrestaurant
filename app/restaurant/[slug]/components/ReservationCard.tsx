@@ -5,8 +5,8 @@ import { useState } from "react";
 import useAvailabilities from "../../../../hooks/useAvailabilities";
 import { CircularProgress } from "@mui/material";
 import Link from "next/link";
-import { convertToDisplayTime, Time, } from "../../../../utils/convertToDisplayTime";
 import "react-datepicker/dist/react-datepicker.css";
+import { Time, converToReadableTime } from "../../../../utils/ConverToReadableTime";
 
 const ReservationCard = ({ openTime, closeTime, slug, }: { openTime: string; closeTime: string; slug: string; }) => {
     const { data, loading, error, fetchAvailabilities } = useAvailabilities();
@@ -24,6 +24,7 @@ const ReservationCard = ({ openTime, closeTime, slug, }: { openTime: string; clo
     };
 
     const handleClick = () => {
+        console.log("slug" + slug);
         fetchAvailabilities({
             slug,
             day,
@@ -123,7 +124,7 @@ const ReservationCard = ({ openTime, closeTime, slug, }: { openTime: string; clo
                                     className="bg-red-600 cursor-pointer p-2 w-24 text-center text-white mb-3 rounded mr-3"
                                 >
                                     <p className="text-sm font-bold">
-                                        {convertToDisplayTime(time.time as Time)}
+                                        {converToReadableTime(time.time as Time)}
                                     </p>
                                 </Link>
                             ) : (

@@ -2,7 +2,7 @@ import { Cuisine, PRICE, Location, Review } from '@prisma/client';
 import Link from 'next/link';
 import React from 'react';
 import Price from '../../components/Price';
-import { calReviewRatingAverage } from '../../../utils/calReviewRatingAverage';
+import { calReviewRatingAverage } from '../../../utils/CalReviewRatingAverage';
 import StarRender from './StarRender';
 
 

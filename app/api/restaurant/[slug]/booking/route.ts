@@ -5,17 +5,17 @@ import { findAvailabileTables } from "../../../../../services/retaurant/findAvai
 
 const prisma = new PrismaClient();
 
-export async function GET(
+export async function POST(
     req: Request,
 ) {
     const body = await req.json();
-    const { slug, day, time, partySize } = body as {
+    const { slug, day, time, partySize } = body.params as {
         slug: string;
         day: string;
         time: string;
         partySize: string;
     };
-
+    console.log({ day,time,partySize,slug });
     if (!day || !time || !partySize) {
         return new Response(JSON.stringify({ errorMessage: "Invalid data provided" }), {
             headers: { "Content-Type": "application/json" },
@@ -34,6 +34,7 @@ export async function GET(
         },
     });
 
+    console.log({ restaurant });
     if (!restaurant) {
         return new Response(JSON.stringify({
             errorMessage: "Invalid data provided",

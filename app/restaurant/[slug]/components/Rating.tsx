@@ -1,7 +1,7 @@
 import { Review } from '@prisma/client';
 import React from 'react';
 import StarRender from '../../../search/components/StarRender';
-import { calReviewRatingAverage } from '../../../../utils/calReviewRatingAverage';
+import { calReviewRatingAverage } from '../../../../utils/CalReviewRatingAverage';
 
 const Rating = ({ reviews }: { reviews: Review[] }) => {
     return (

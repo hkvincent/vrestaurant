@@ -3,7 +3,7 @@ import React from 'react';
 import { RestaurantCardType } from '../type';
 import Price from './Price';
 import StarRender from '../search/components/StarRender';
-import { calReviewRatingAverage } from '../../utils/calReviewRatingAverage';
+import { calReviewRatingAverage } from '../../utils/CalReviewRatingAverage';
 
 
 interface RestaurantCardProps {
