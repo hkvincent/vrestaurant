@@ -1,21 +1,19 @@
 import { PrismaClient } from "@prisma/client";
-import { NextApiRequest, NextApiResponse } from "next";
 import { findAvailabileTables } from "../../../../../services/retaurant/findAvailableTables";
+import { NextRequest } from "next/server";
 
 
 const prisma = new PrismaClient();
 
-export async function POST(
-    req: Request,
+export async function GET(
+    req: NextRequest,
 ) {
-    const body = await req.json();
-    const { slug, day, time, partySize } = body.params as {
-        slug: string;
-        day: string;
-        time: string;
-        partySize: string;
-    };
-    console.log({ day,time,partySize,slug });
+    console.log(req.nextUrl.searchParams);
+
+    const params = Object.fromEntries(req.nextUrl.searchParams);
+    const { slug, day, time, partySize } = params;
+
+    console.log({ day, time, partySize, slug });
     if (!day || !time || !partySize) {
         return new Response(JSON.stringify({ errorMessage: "Invalid data provided" }), {
             headers: { "Content-Type": "application/json" },

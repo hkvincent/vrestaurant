@@ -73,8 +73,8 @@ const ReservationCard = ({ openTime, closeTime, slug, }: { openTime: string; clo
                     value={partySize}
                     onChange={(e) => setPartySize(e.target.value)}
                 >
-                    {partySizes.map((size) => (
-                        <option value={size.value}>{size.label}</option>
+                    {partySizes.map((size, index) => (
+                        <option key={index} value={size.value}>{size.label}</option>
                     ))}
                 </select>
             </div>
@@ -98,8 +98,8 @@ const ReservationCard = ({ openTime, closeTime, slug, }: { openTime: string; clo
                         value={time}
                         onChange={(e) => setTime(e.target.value)}
                     >
-                        {filterTimeByRestaurantOpenWindow().map((time) => (
-                            <option value={time.time}>{time.displayTime}</option>
+                        {filterTimeByRestaurantOpenWindow().map((time, index) => (
+                            <option key={index} value={time.time}>{time.displayTime}</option>
                         ))}
                     </select>
                 </div>
@@ -117,9 +117,9 @@ const ReservationCard = ({ openTime, closeTime, slug, }: { openTime: string; clo
                 <div className="mt-4">
                     <p className="text-reg">Select a Time</p>
                     <div className="flex flex-wrap mt-2">
-                        {data.map((time) => {
+                        {data.map((time, index) => {
                             return time.available ? (
-                                <Link
+                                <Link key={index}
                                     href={`/reserve/${slug}?date=${day}T${time.time}&partySize=${partySize}`}
                                     className="bg-red-600 cursor-pointer p-2 w-24 text-center text-white mb-3 rounded mr-3"
                                 >

@@ -57,9 +57,11 @@ const AuthContext = ({ children }: { children: React.ReactNode }) => {
                     loading: false,
                 });
             }
-
+            console.log('jwt:', jwt);
             axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+            console.log('jwt:', jwt);
             const response = await axios.get("/api/auth/verify");
+            console.log('response:', response);
 
             setAuthState({
                 data: response.data,

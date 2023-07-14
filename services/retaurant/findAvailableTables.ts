@@ -39,10 +39,10 @@ export const findAvailabileTables = async ({
         },
     });
 
-    const bookingTablesObj: { [key: string]: { [key: number]: true } } = {};
+    const bookedTablesObj: { [key: string]: { [key: number]: true } } = {};
 
     bookings.forEach((booking) => {
-        bookingTablesObj[booking.booking_time.toISOString()] =
+        bookedTablesObj[booking.booking_time.toISOString()] =
             booking.tables.reduce((obj, table) => {
                 return {
                     ...obj,
@@ -61,10 +61,10 @@ export const findAvailabileTables = async ({
         };
     });
 
-    searchTimesWithTables.forEach((t) => {
+    searchTimesWithTables.forEach((t,i,a) => {
         t.tables = t.tables.filter((table) => {
-            if (bookingTablesObj[t.date.toISOString()]) {
-                if (bookingTablesObj[t.date.toISOString()][table.id]) return false;
+            if (bookedTablesObj[t.date.toISOString()]) {
+                if (bookedTablesObj[t.date.toISOString()][table.id]) return false;
             }
             return true;
         });

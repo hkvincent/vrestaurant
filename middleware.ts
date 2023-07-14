@@ -4,7 +4,6 @@ import * as jose from "jose";
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
     const bearerToken = request.headers.get("authorization") as string;
-
     if (!bearerToken) {
         return new NextResponse(
             JSON.stringify({ errorMessage: "Unauthorized request" }),
@@ -22,10 +21,10 @@ export async function middleware(request: NextRequest) {
     }
 
     const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-
     try {
         await jose.jwtVerify(token, secret);
     } catch (error) {
+        console.log("error", { error });
         return new NextResponse(
             JSON.stringify({ errorMessage: "Unauthorized request" }),
             { status: 401 }

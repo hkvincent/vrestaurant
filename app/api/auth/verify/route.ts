@@ -5,8 +5,6 @@ const prisma = new PrismaClient();
 
 export async function GET(req: Request) {
     const headers = req.headers;
-    console.log({ headers });
-
     const bearerToken = headers.get("authorization") as string;
 
     if (!bearerToken) {
@@ -17,10 +15,7 @@ export async function GET(req: Request) {
             });
     }
 
-    console.log({ bearerToken });
-
     const token = bearerToken.split(" ")[1];
-
     const payload = jwt.decode(token) as { email: string };
 
     if (!payload.email) {
