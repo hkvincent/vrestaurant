@@ -26,9 +26,7 @@ const AuthModal = ({ isSignin }: { isSignin: boolean }) => {
     const handleClose = () => setOpen(false);
     const { signin, signup } = useAuth();
     const { loading, data, error, setAuthState } = useContext(AuthenticationContext);
-    console.log("data", data)
-    console.log("loading", loading)
-    
+
     const handleOpen = () => {
         setAuthState({
             data: null,

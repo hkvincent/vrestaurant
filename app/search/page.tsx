@@ -48,7 +48,6 @@ const fecthRestaurant = (searchParams: SearchParams) => {
         price: true,
         reviews: true,
     }
-    console.log({ searchParams })
     return prisma.restaurant.findMany(
         {
             where

@@ -41,13 +41,13 @@ export async function POST(
 
     if (!restaurant) {
         return new Response(JSON.stringify({
-            errorMessage: "Invalid data provided",
+            errorMessage: "Restaurant not found",
         }), {
             headers: { "Content-Type": "application/json" },
             status: 400,
         });
 
-    }
+    }console
 
     if (
         new Date(`${day}T${time}`) < new Date(`${day}T${restaurant.open_time}`) ||

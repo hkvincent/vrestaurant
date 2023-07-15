@@ -24,7 +24,6 @@ const ReservationCard = ({ openTime, closeTime, slug, }: { openTime: string; clo
     };
 
     const handleClick = () => {
-        console.log("slug" + slug);
         fetchAvailabilities({
             slug,
             day,
