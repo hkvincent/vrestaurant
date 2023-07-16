@@ -10,22 +10,13 @@ export async function POST(
     req: NextRequest,
 ) {
     const params = Object.fromEntries(req.nextUrl.searchParams);
-    const { slug, day, time, partySize } = params as {
-        slug: string;
-        day: string;
-        time: string;
-        partySize: string;
-    };
-
     const body = await req.json();
+
+    const tempObj = { ...params, ...body };
     const {
-        bookerEmail,
-        bookerPhone,
-        bookerFirstName,
-        bookerLastName,
-        bookerOccasion,
-        bookerRequest,
-    } = body;
+        slug, day, time, partySize, // from params
+        bookerEmail, bookerPhone, bookerFirstName, bookerLastName, bookerOccasion, bookerRequest // from body
+    } = tempObj
 
     const restaurant = await prisma.restaurant.findUnique({
         where: {
@@ -47,7 +38,7 @@ export async function POST(
             status: 400,
         });
 
-    }console
+    }
 
     if (
         new Date(`${day}T${time}`) < new Date(`${day}T${restaurant.open_time}`) ||
@@ -117,23 +108,39 @@ export async function POST(
                 tablesToBooks.push(tablesCount[4][0]);
                 tablesCount[4].shift();
                 seatsRemaining = seatsRemaining - 4;
-            } else {
+            } else if (tablesCount[2].length) {
                 tablesToBooks.push(tablesCount[2][0]);
                 tablesCount[2].shift();
                 seatsRemaining = seatsRemaining - 2;
+            } else {
+                // Handle the case where there are no tables available
+                break;
             }
         } else {
             if (tablesCount[2].length) {
                 tablesToBooks.push(tablesCount[2][0]);
                 tablesCount[2].shift();
                 seatsRemaining = seatsRemaining - 2;
-            } else {
+            } else if (tablesCount[4].length) {
                 tablesToBooks.push(tablesCount[4][0]);
                 tablesCount[4].shift();
                 seatsRemaining = seatsRemaining - 4;
+            } else {
+                // Handle the case where there are no tables available
+                break;
             }
         }
     }
+
+    if (seatsRemaining > 0) {
+        return new Response(JSON.stringify({
+            errorMessage: "No tables available",
+        }), {
+            headers: { "Content-Type": "application/json" },
+            status: 400,
+        });
+    }
+
 
     const booking = await prisma.booking.create({
         data: {
