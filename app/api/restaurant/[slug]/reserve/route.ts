@@ -8,16 +8,17 @@ const prisma = new PrismaClient();
 
 export async function POST(
     req: NextRequest,
+    { params }: { params: { slug: string } }
 ) {
-    const params = Object.fromEntries(req.nextUrl.searchParams);
+    const searchParams = Object.fromEntries(req.nextUrl.searchParams);
     const body = await req.json();
 
-    const tempObj = { ...params, ...body };
+    const tempObj = { ...searchParams, ...body, ...params };
     const {
         slug, day, time, partySize, // from params
         bookerEmail, bookerPhone, bookerFirstName, bookerLastName, bookerOccasion, bookerRequest // from body
     } = tempObj
-
+    console.log({ tempObj });
     const restaurant = await prisma.restaurant.findUnique({
         where: {
             slug,
