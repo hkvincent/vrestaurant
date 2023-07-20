@@ -41,15 +41,33 @@ export const findAvailabileTables = async ({
 
     const bookedTablesObj: { [key: string]: { [key: number]: true } } = {};
 
+    // bookings.forEach((booking) => {
+    //     bookedTablesObj[booking.booking_time.toISOString()] =
+    //         booking.tables.reduce((obj, table) => {
+    //             return {
+    //                 ...obj,
+    //                 [table.table_id]: true,
+    //             };
+    //         }, {});
+    // });
+
     bookings.forEach((booking) => {
-        bookedTablesObj[booking.booking_time.toISOString()] =
-            booking.tables.reduce((obj, table) => {
-                return {
-                    ...obj,
-                    [table.table_id]: true,
-                };
-            }, {});
+        const bookingStartTime = booking.booking_time.getTime();
+        const bookingEndTime = bookingStartTime + 60*60*1000; // Add one hour to the booking start time
+    
+        for (let time = bookingStartTime; time < bookingEndTime; time += 30*60*1000) {
+            const timeString = new Date(time).toISOString();
+    
+            if (!bookedTablesObj[timeString]) {
+                bookedTablesObj[timeString] = {};
+            }
+    
+            booking.tables.forEach((table) => {
+                bookedTablesObj[timeString][table.table_id] = true;
+            });
+        }
     });
+    
 
     const tables = restaurant.tables;
 
