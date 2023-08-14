@@ -1,5 +1,5 @@
 import React from 'react';
-import { Time, converToReadableTime } from '../../../../utils/ConverToReadableTime';
+import { Time, converToReadableTime } from '../../../../utils/converToReadableTime';
 import { format } from "date-fns";
 import { enGB, eo, ru, zhHK } from 'date-fns/locale'
 const Header = ({

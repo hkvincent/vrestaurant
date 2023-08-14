@@ -3,7 +3,7 @@ import React from 'react';
 import { RestaurantCardType } from '../type';
 import Price from './Price';
 import StarRender from '../search/components/StarRender';
-import { calReviewRatingAverage } from '../../utils/CalReviewRatingAverage';
+import { calReviewRatingAverageFun } from '../../utils/calReviewRatingAverage';
 
 
 interface RestaurantCardProps {
@@ -16,7 +16,7 @@ const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
 
     const renderRatingText = () => {
         if (restaurant.reviews.length === 0) return 'No reviews yet';
-        const rating = calReviewRatingAverage(restaurant.reviews);
+        const rating = calReviewRatingAverageFun(restaurant.reviews);
         if (rating < 2) {
             return 'Awful';
         }
@@ -50,7 +50,7 @@ const RestaurantCard = ({ restaurant }: RestaurantCardProps) => {
                     </h3>
                     <div className="flex items-start">
                         <div className="flex mb-2">
-                            <StarRender rating={calReviewRatingAverage(restaurant.reviews)} />
+                            <StarRender rating={calReviewRatingAverageFun(restaurant.reviews)} />
                         </div>
                         <p className="ml-2">{restaurant.reviews.length} review{restaurant.reviews.length > 1 && 's'}</p>
                     </div>

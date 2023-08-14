@@ -6,7 +6,7 @@ import useAvailabilities from "../../../../hooks/useAvailabilities";
 import { CircularProgress } from "@mui/material";
 import Link from "next/link";
 import "react-datepicker/dist/react-datepicker.css";
-import { Time, converToReadableTime } from "../../../../utils/ConverToReadableTime";
+import { Time, converToReadableTime } from "../../../../utils/converToReadableTime";
 
 const ReservationCard = ({ openTime, closeTime, slug, }: { openTime: string; closeTime: string; slug: string; }) => {
     const { data, loading, error, fetchAvailabilities } = useAvailabilities();

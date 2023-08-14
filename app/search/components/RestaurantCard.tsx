@@ -2,7 +2,7 @@ import { Cuisine, PRICE, Location, Review } from '@prisma/client';
 import Link from 'next/link';
 import React from 'react';
 import Price from '../../components/Price';
-import { calReviewRatingAverage } from '../../../utils/CalReviewRatingAverage';
+import { calReviewRatingAverageFun } from '../../../utils/calReviewRatingAverage';
 import StarRender from './StarRender';
 
 
@@ -21,7 +21,7 @@ const RestaurantCard = ({ restaurant }: { restaurant: RestaurantCardProps }) => 
 
     const renderRatingText = () => {
         if (restaurant.reviews.length === 0) return 'No reviews yet';
-        const rating = calReviewRatingAverage(restaurant.reviews);
+        const rating = calReviewRatingAverageFun(restaurant.reviews);
         if (rating < 2) {
             return 'Awful';
         }
@@ -72,7 +72,7 @@ const RestaurantCard = ({ restaurant }: { restaurant: RestaurantCardProps }) => 
                         //             />
                         //         </svg>
                         //     ))
-                        <StarRender rating={calReviewRatingAverage(restaurant.reviews)} />
+                        <StarRender rating={calReviewRatingAverageFun(restaurant.reviews)} />
                     }</div>
                     <p className="ml-2 text-sm">{renderRatingText()}</p>
                 </div>
